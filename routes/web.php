@@ -24,24 +24,28 @@ Route::get('/', function () {
 //    });
 
     return view('posts',[
-        "posts"=>Post::latest()->get()
+        "posts"=>Post::latest()->get(),
+        "categories"=>Category::all()
     ]);
-});
+})->name('home');
 
 Route::get('posts/{post}',function(Post $post){
     return view("post",[
-        'post'=> $post
+        'post'=> $post,
     ]);
 });
 
 Route::get('categories/{category:slug}',function (Category $category){
    return view('posts',[
-        "posts"=> $category->posts
+        "posts"=> $category->posts,
+       "currentCategory"=>$category,
+       "categories"=>Category::all()
    ]);
-});
+})->name('category');
 
 Route::get('authors/{user:username}',function (User $user){
     return view('posts',[
-        "posts"=> $user->posts
+        "posts"=> $user->posts,
+        "categories"=>Category::all()
     ]);
 });
